@@ -8,6 +8,8 @@ function addItem(e){
   e.preventDefault();
 
   var newItem = document.getElementById('item').value;
+  item = item.value;
+  localStorage.setItem('item',item.value);
   var li = document.createElement('li');
   li.className = 'list-group-item';
   li.appendChild(document.createTextNode(newItem));
@@ -37,5 +39,6 @@ function filterItems(e){
     }
   });
 }
+
 
 
