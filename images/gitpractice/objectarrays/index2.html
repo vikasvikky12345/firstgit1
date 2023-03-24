@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .conatiner{
+            margin:30px;
+            padding: 20px;
+            border:1px solid;
+            width:fit-content
+        }
+        .formgroup{
+            padding:10px;
+            broder:1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="#" onsubmit="signup()">
+        <div class="formgroup">
+            <label for="name" class="name">UserName</label>
+            <input type="text" id="name" placeholder="Enter Your Name" required>
+        </div>
+        <div class="formgroup">
+            <label for="email" class="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="formgroup">
+            <label for="phonenumber" class="phonenumber">Phonenumber</label>
+            <input type="number" id="phonenumber" placeholder="enter number" required>
+        </div>
+        <button onclick="signup" id="btn">SignUp</button>
+        </form>
+        <ul id="listitems" ></ul>
+    </div>
+    <script>
+        function signup(){
+            let name,email,psw;
+            name=document.getElementById("name").value;
+            email=document.getElementById("email").value;
+
+            phonenumber = document.getElementById("phonenumber").value;
+            const obj = {
+                name:name,
+                email:email,
+                phonenumber:phonenumber
+            }
+            localStorage.setItem(obj.email,JSON.stringify(obj))
+            showonscreen(obj)
+
+        }
+        function showonscreen(obj){
+            const parentele = document.getElementById('listitems');
+            const childele = document.createElement('li')
+            childele.textContent = obj.name + " - " + obj.email + " - " + obj.phonenumber;
+
+            const deletebtn = document.createElement('input');
+            deletebtn.type ="button"
+            deletebtn.value = "Delete"
+            deletebtn.onclick = () => {
+                localStorage.removeItem(obj.email);
+                parentele.removeChild(childele);
+            }
+
+            const editbtn = document.createElement('input');
+            editbtn.type ="button"
+            editbtn.value = "Edit"
+            editbtn.onclick = () => {
+                localStorage.removeItem(obj.email);
+                parentele.removeChild(childele);
+            
+            }
+            childele.append(deletebtn)
+            childele.append(editbtn)
+            parentele.appendChild(childele)
+        }
+    </script>
+</body>
+</html>
