@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .conatiner{
+            margin:30px;
+            padding: 20px;
+            border:1px solid;
+            width:fit-content
+        }
+        .formgroup{
+            padding:10px;
+            broder:1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="#" onsubmit="signup(event)">
+            <label for="expense" class="name">Choose ExpenseAmount</label>
+            <input type="number" id="expense"  required>
+            <label for="description" class="description">Description</label>
+            <input type="text" id="description" required>
+            <label for="category" class="category">Category</label>
+            <select name="category" id="category" class="category">
+                <option value="value">select category</option>
+                <option value="movie">Movie</option>
+                <option value="dinner">Dinner</option>
+                <option value="fuel">Fuel</option>
+                <option value="shooping">Shooping</option>
+                <option value="groceries">Groceries</option>
+            </select>
+        <button onclick="signup" id="btn">Add Expense</button>
+        </form>
+        <ul id="listitems" ></ul>
+    </div>
+    <script>
+        function signup(event){
+            event.preventDefault()
+            let expense,description,category;
+            expense=document.getElementById("expense").value;
+            description=document.getElementById("description").value;
+
+            category = document.getElementById("category").value;
+            const obj = {
+                expense:expense,
+                description:description,
+                category:category
+            }
+            localStorage.setItem(obj.description,JSON.stringify(obj))
+            showonscreen(obj)
+
+        }
+        function showonscreen(obj){
+            const parentele = document.getElementById('listitems');
+            const childele = document.createElement('li')
+            childele.textContent = obj.expense + " - " + obj.description + " - " + obj.category;
+
+            const deletebtn = document.createElement('input');
+            deletebtn.type ="button"
+            deletebtn.value = "Delete Expense"
+            deletebtn.onclick = () => {
+                localStorage.removeItem(obj.description);
+                parentele.removeChild(childele);
+            }
+
+            const editbtn = document.createElement('input');
+            editbtn.type ="button"
+            editbtn.value = "Edit Expense"
+            editbtn.onclick = () => {
+                localStorage.removeItem(obj.description);
+                parentele.removeChild(childele);
+            
+            }
+            childele.append(deletebtn)
+            childele.append(editbtn)
+            parentele.appendChild(childele)
+        }
+    </script>
+</body>
+</html>

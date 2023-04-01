@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="style.css" href="style.css">
+    <style>
+        .container{
+            margin:30px;
+            padding:20px;
+            width:fit-content;
+            border: 2px solid;
+        }
+        form{
+            padding:10px;
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="form">
+            <label for="username" class="name">UserName</label><br>
+            <input type="text" class="username" id="username" placeholder="enter your username" required><br>
+            <label for="email" class="email">Email</label><br>
+            <input type="email" class="email"  id=emailplaceholder="enter your email" required><br>
+                <label for="password" class="password">Password</label><br>
+                <input type="password" class="password" id="password" placeholder="enter your password" required><br>
+            <button type="submit" onclick="signup()">SignUp</button>
+
+        </form>
+    </div>
+    <script>
+        function signup(e){
+            e.preventDefault();
+            let email = document.getElementById('email').value
+            let username = document.getElementById('username').value
+            let password = document.getElementById('password').value
+            let user ={
+                email1:email,
+                username1:username,
+                password1:password,
+            };
+            var json = JSON.stringify(user)
+            localStorage.setItem('user',JSON)
+            alert('useradded')
+        }
+            
+            
+    </script>
+</body>
+</html>
