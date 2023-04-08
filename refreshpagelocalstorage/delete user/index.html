@@ -75,7 +75,7 @@
             parentNode = document.getElementById('listofusers');
             childHTML = `<li id=${user._id}>${user.name}-${user.email}-${user.number}
                 <button onclick = deleteUser('${user._id}')>DeleteUser</button>
-                <button onclick = editUserDetails('${user._id}','${user.name}','${user.number}')>Edituser</button>
+                <button onclick = editUserDetails('${user.email}','${user.name}','${user.number}','${user._id}')>Edituser</button>
                 </li>`
             parentNode.innerHTML = parentNode.innerHTML+childHTML
 
