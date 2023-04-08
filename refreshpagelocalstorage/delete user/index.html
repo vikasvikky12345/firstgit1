@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form onsubmit="saveToLocalStorage(event)">
+        <label for="name">Name</label>
+        <input type="text" class="name" id="name">
+        <label for="email" class="email">Email</label>
+        <input type="email" class="email" id="email">
+        <label for="number">Number</label>
+        <input type="number" class="number" id="number">
+        <button id="btn">Submit</button>
+    </form>
+    <ul id="listofusers"></ul>
+    <script>
+        function saveToLocalStorage(event){
+            event.preventDefault();
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const number = event.target.number.value;
+            const myobj = {
+                name,
+                email,
+                number,
+            }
+            axios.post('https://crudcrud.com/api/33196b5cf5b94400bd067cd68151d934/userdetails',myobj)
+            .then((res)=>{
+                shownewuseronscreen(res.data)
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
+            
+            //localStorage.setItem(myobj.email,JSON.stringify(myobj));
+            
+        window.addEventListener('DOMContentLoaded',()=>{
+            axios.get('https://crudcrud.com/api/33196b5cf5b94400bd067cd68151d934/userdetails')
+            .then((res)=>{
+                shownewuseronscreen(res.data)
+                console.log(res)
+
+                for(var i=0;i<res.data.length;i++){
+                    shownewuseronscreen(res.data[i])
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+            
+                /*const localStorageObj = localStorage;
+                const localStoragekeys = Object.keys(localStorageObj);
+                for(var i = 0; i<localStoragekeys.length;i++){
+                    const key = localStoragekeys[i]
+                    const userDetailString = localStorageObj[key]
+                    const userDetailsObj = JSON.parse(userDetailString)
+                    shownewuseronscreen(userDetailsObj)
+                }*/
+        })
+        
+        function shownewuseronscreen(user){
+            document.getElementById('email').value='';
+            document.getElementById('name').value='';
+            document.getElementById('number').value='';
+            if(localStorage.getItem(user.email) !== null){
+                removeUserFromScreen(user.email)
+            }
+            parentNode = document.getElementById('listofusers');
+            childHTML = `<li id=${user._id}>${user.name}-${user.email}-${user.number}
+                <button onclick = deleteUser('${user._id}')>DeleteUser</button>
+                <button onclick = editUserDetails('${user._id}','${user.name}','${user.number}')>Edituser</button>
+                </li>`
+            parentNode.innerHTML = parentNode.innerHTML+childHTML
+
+        }
+        function editUserDetails(email,name,number){
+            document.getElementById('email').value = email;
+            document.getElementById('name').value = name;
+            document.getElementById('number').value = number;
+            deleteUser(email);
+        }
+        function deleteUser(userid){
+            axios.delete(`https://crudcrud.com/api/33196b5cf5b94400bd067cd68151d934/userdetails/${userid}`)
+            //console.log(email)
+            //localStorage.removeItem(email);
+            removeUserFromScreen(email);
+        }
+        function removeUserFromScreen(userid){
+            const parentNode=document.getElementById('listofusers');
+            const childnodetoberemoved=document.getElementById(userid);
+            if(childnodetoberemoved){
+                parentNode.removeChild(childnodetoberemoved)
+
+            }
+            
+        }
+    </script>
+</body>
+</html>
