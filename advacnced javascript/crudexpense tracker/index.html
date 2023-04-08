@@ -63,12 +63,20 @@
             .catch((err)=>{
                 console.log(err)
             })
-
-
-
-
-
             //localStorage.setItem(obj.description,JSON.stringify(obj))
+            window.addEventListener('DOMContentLoaded',()=>{
+                axios.get('https://crudcrud.com/api/0542639592214cd5a5ac1e9653a80d46/expensetracker')
+                .then((res)=>{
+                    console.log((res))
+
+                    for(var i=0;i<res.data.length;i++){
+                        showonscreen(res.data[i])
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            })
             
         }
         function showonscreen(obj){
